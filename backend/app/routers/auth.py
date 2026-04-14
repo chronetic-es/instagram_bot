@@ -7,6 +7,13 @@ from app.schemas import LoginRequest, AuthMeResponse
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
+
+# Derive bcrypt hash from plain password at startup (avoids $-interpolation issues in Docker)
+if not settings.admin_password_hash and settings.admin_password:
+    settings.admin_password_hash = bcrypt.hashpw(
+        settings.admin_password.encode("utf-8"), bcrypt.gensalt()
+    ).decode("utf-8")
+
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
@@ -40,7 +47,7 @@ async def login(request: LoginRequest, response: Response):
         key="access_token",
         value=token,
         httponly=True,
-        secure=False,  # Set to True in production (HTTPS)
+        secure=True,
         samesite="lax",  # lax for dev; use strict in production
         max_age=60 * 60 * 24 * settings.jwt_expire_days,
         path="/",

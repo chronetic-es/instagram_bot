@@ -39,6 +39,7 @@ class Settings(BaseSettings):
 
     # Auth
     admin_username: str = "admin"
+    admin_password: str = ""  # plain text — hashed at startup (avoids $ in env vars)
     admin_password_hash: str = ""
     jwt_secret: str = "change_me_in_production"
     jwt_algorithm: str = "HS256"

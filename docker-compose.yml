@@ -19,9 +19,19 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     environment:
-      # Override .env values for Docker internal networking
       DATABASE_URL: postgresql+asyncpg://gym:gym@db:5432/gym_dm_bot
-      FRONTEND_URL: https://REPLACE_WITH_YOUR_DOMAIN
+      FRONTEND_URL: ${FRONTEND_URL:-https://REPLACE_WITH_YOUR_DOMAIN}
+      META_VERIFY_TOKEN: ${META_VERIFY_TOKEN:-}
+      META_PAGE_ACCESS_TOKEN: ${META_PAGE_ACCESS_TOKEN:-}
+      META_APP_SECRET: ${META_APP_SECRET:-}
+      INSTAGRAM_ACCOUNT_ID: ${INSTAGRAM_ACCOUNT_ID:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_CLAIM_EMAIL: ${VAPID_CLAIM_EMAIL:-}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      JWT_SECRET: ${JWT_SECRET:-change_me_in_production}
     depends_on:
       db:
         condition: service_healthy
