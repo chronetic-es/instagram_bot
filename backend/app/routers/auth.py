@@ -7,13 +7,6 @@ from app.schemas import LoginRequest, AuthMeResponse
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
-
-# Derive bcrypt hash from plain password at startup (avoids $-interpolation issues in Docker)
-if not settings.admin_password_hash and settings.admin_password:
-    settings.admin_password_hash = bcrypt.hashpw(
-        settings.admin_password.encode("utf-8"), bcrypt.gensalt()
-    ).decode("utf-8")
-
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
@@ -26,13 +19,18 @@ async def login(request: LoginRequest, response: Response):
             detail="Usuario o contraseña incorrectos",
         )
 
-    # Verify password hash
-    try:
-        password_ok = bcrypt.checkpw(
-            request.password.encode("utf-8"),
-            settings.admin_password_hash.encode("utf-8"),
-        )
-    except Exception:
+    # Verify password — support bcrypt hash (local dev) or plaintext (Easypanel/Docker)
+    if settings.admin_password_hash:
+        try:
+            password_ok = bcrypt.checkpw(
+                request.password.encode("utf-8"),
+                settings.admin_password_hash.encode("utf-8"),
+            )
+        except Exception:
+            password_ok = False
+    elif settings.admin_password:
+        password_ok = (request.password == settings.admin_password)
+    else:
         password_ok = False
 
     if not password_ok:
