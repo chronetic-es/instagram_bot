@@ -115,9 +115,9 @@ export function DashboardPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
-      <header className="flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-200 flex-shrink-0">
-        <div className="flex items-center gap-2 mr-2">
-          <span className="text-lg font-bold text-gray-900">GymDM</span>
+      <header className="flex items-center gap-1.5 sm:gap-3 px-2 sm:px-4 py-2 sm:py-3 bg-white border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 mr-1 sm:mr-2">
+          <span className="text-base sm:text-lg font-bold text-gray-900">GymDM</span>
           {totalUnread > 0 && (
             <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 font-medium">
               {totalUnread}
@@ -126,20 +126,21 @@ export function DashboardPage() {
         </div>
 
         {/* Main tabs */}
-        <div className="flex border border-gray-200 rounded-lg overflow-hidden text-sm">
+        <div className="flex border border-gray-200 rounded-lg overflow-hidden text-xs sm:text-sm">
           <button
             onClick={() => setMainTab('conversations')}
-            className={`px-3 py-1.5 font-medium transition-colors ${
+            className={`px-2 sm:px-3 py-1 sm:py-1.5 font-medium transition-colors ${
               mainTab === 'conversations'
                 ? 'bg-blue-600 text-white'
                 : 'text-gray-500 hover:text-gray-700 bg-white'
             }`}
           >
-            Conversaciones
+            <span className="sm:hidden">Chats</span>
+            <span className="hidden sm:inline">Conversaciones</span>
           </button>
           <button
             onClick={() => setMainTab('profiles')}
-            className={`px-3 py-1.5 font-medium transition-colors flex items-center gap-1.5 ${
+            className={`px-2 sm:px-3 py-1 sm:py-1.5 font-medium transition-colors flex items-center gap-1 sm:gap-1.5 ${
               mainTab === 'profiles'
                 ? 'bg-blue-600 text-white'
                 : 'text-gray-500 hover:text-gray-700 bg-white'
@@ -166,7 +167,7 @@ export function DashboardPage() {
         <NotificationSetup />
         <button
           onClick={handleLogout}
-          className="text-gray-400 hover:text-gray-600 text-sm px-2 py-1"
+          className="text-gray-400 hover:text-gray-600 text-sm px-1 sm:px-2 py-1"
           title="Cerrar sesión"
         >
           ⏻

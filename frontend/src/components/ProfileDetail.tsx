@@ -46,9 +46,10 @@ export function ProfileDetail({ profile, onViewConversation, onBack }: Props) {
         </div>
         <button
           onClick={() => onViewConversation(profile.conversation_id)}
-          className="flex-shrink-0 text-xs text-blue-600 hover:text-blue-800 font-medium px-3 py-1.5 rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors"
+          className="flex-shrink-0 text-xs text-blue-600 hover:text-blue-800 font-medium px-2 sm:px-3 py-1.5 rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors"
         >
-          Ver conversación
+          <span className="sm:hidden">Ver chat</span>
+          <span className="hidden sm:inline">Ver conversación</span>
         </button>
       </div>
 

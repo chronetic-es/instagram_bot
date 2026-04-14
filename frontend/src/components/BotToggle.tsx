@@ -34,16 +34,19 @@ export function BotToggle({ enabled, onChange }: Props) {
     <button
       onClick={handleToggle}
       disabled={loading}
-      className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+      className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors ${
         enabled
           ? 'bg-green-100 text-green-700 hover:bg-green-200'
           : 'bg-red-100 text-red-700 hover:bg-red-200'
       } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+      title={enabled ? 'Bot activo' : 'Bot pausado'}
     >
       <span
         className={`inline-block w-2 h-2 rounded-full ${enabled ? 'bg-green-500' : 'bg-red-500'}`}
       />
-      {loading ? '...' : enabled ? 'Bot activo' : 'Bot pausado'}
+      <span className="hidden sm:inline">
+        {loading ? '...' : enabled ? 'Bot activo' : 'Bot pausado'}
+      </span>
     </button>
   );
 }
